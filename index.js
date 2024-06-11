@@ -1,8 +1,10 @@
 // import http from 'http'
 // const http = require('http')
+require('dotenv').config()
 const express = require('express')
 const { request } = require('http')
 const cors = require('cors')
+const Note = require('./models/note')
 
 let notes = [
     {
@@ -54,7 +56,9 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/notes', (request, response) => {
-    response.json(notes)
+    Note.find({}).then(notes => {
+      response.json(notes)
+    })
 })
 
 app.get('/api/notes/:id', (request, response) => {
